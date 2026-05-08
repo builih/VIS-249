@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glass as a Machine for Light</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080808;
+    --text: #e8e4dc;
+    --muted: #888;
+    --accent: #c8b89a;
+    --line: rgba(255,255,255,0.08);
+    --serif: 'EB Garamond', Georgia, serif;
+    --mono: 'Space Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.75;
+    cursor: crosshair;
+  }
+
+  /* Glint cursor effect */
+  .glint {
+    position: fixed;
+    pointer-events: none;
+    width: 6px;
+    height: 6px;
+    background: rgba(255,255,255,0.85);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    transition: opacity 0.3s;
+    box-shadow: 0 0 12px 4px rgba(200,184,154,0.4);
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 3rem;
+    border-bottom: 1px solid var(--line);
+    background: rgba(8,8,8,0.85);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .nav-sections {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-sections a {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-sections a:hover { color: var(--text); }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 0 5rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+    object-position: right center;
+    width: 100%;
+    height: 100%;
+    opacity: 0.55;
+    filter: saturate(0.7);
+  }
+
+  .hero-placeholder {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, #1a1510 0%, #0d1520 50%, #080808 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-placeholder-text {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.15);
+    text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 1rem 2rem;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.3) 50%, rgba(8,8,8,0.1) 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 4rem;
+    max-width: 900px;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 7vw, 7rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .hero-subtitle {
+    font-family: var(--serif);
+    font-size: clamp(1rem, 1.8vw, 1.4rem);
+    font-style: italic;
+    color: var(--accent);
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+  }
+
+  .hero-caption {
+    max-width: 620px;
+    font-size: 1rem;
+    color: rgba(232,228,220,0.7);
+    line-height: 1.8;
+  }
+
+  /* Section headers */
+  .section-header {
+    padding: 6rem 4rem 3rem;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: baseline;
+    gap: 2rem;
+  }
+
+  .section-number {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  /* Image blocks */
+  .essay-entry {
+    margin-bottom: 0;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .essay-entry.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Full-width image */
+  .layout-full {
+    padding: 0 0 1px 0;
+  }
+
+  .layout-full .image-wrap {
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .layout-full .caption-wrap {
+    padding: 2rem 4rem 5rem;
+    max-width: 720px;
+  }
+
+  /* Two-column: image left, caption right */
+  .layout-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 70vh;
+    padding: 0 0 2px 0;
+  }
+
+  .layout-split .image-wrap {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .layout-split .caption-wrap {
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-left: 1px solid var(--line);
+  }
+
+  /* Two-column: caption left, image right */
+  .layout-split-rev {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 70vh;
+    padding: 0 0 2px 0;
+  }
+
+  .layout-split-rev .caption-wrap {
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid var(--line);
+    order: 1;
+  }
+
+  .layout-split-rev .image-wrap {
+    overflow: hidden;
+    position: relative;
+    order: 2;
+  }
+
+  /* Wide with offset caption */
+  .layout-wide {
+    padding: 0 4rem 5rem;
+  }
+
+  .layout-wide .image-wrap {
+    width: 100%;
+    aspect-ratio: 3/2;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 0;
+  }
+
+  .layout-wide .caption-wrap {
+    margin-left: auto;
+    max-width: 520px;
+    padding: 2rem 0 0 0;
+  }
+
+  /* Tall portrait */
+  .layout-portrait {
+    display: grid;
+    grid-template-columns: 55% 1fr;
+    min-height: 90vh;
+  }
+
+  .layout-portrait .image-wrap {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .layout-portrait .caption-wrap {
+    padding: 5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    border-left: 1px solid var(--line);
+  }
+
+  /* Image itself */
+  .photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.85);
+    transition: filter 0.6s, transform 0.8s;
+  }
+
+  .image-wrap:hover .photo {
+    filter: saturate(1);
+  }
+
+  /* Placeholder photo */
+  .photo-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    border: 1px dashed rgba(255,255,255,0.1);
+  }
+
+  .photo-placeholder-inner {
+    text-align: center;
+  }
+
+  .photo-placeholder-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.25);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .photo-placeholder-label {
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    font-style: italic;
+    color: rgba(255,255,255,0.2);
+    max-width: 220px;
+    display: block;
+    line-height: 1.5;
+  }
+
+  .upload-hint {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 0.4rem 0.8rem;
+  }
+
+  /* Caption typography */
+  .entry-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .entry-caption {
+    font-family: var(--serif);
+    font-size: 1rem;
+    line-height: 1.85;
+    color: rgba(232,228,220,0.8);
+  }
+
+  .entry-caption strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* Closing */
+  .closing {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 6rem;
+    border-top: 1px solid var(--line);
+    margin-top: 4rem;
+  }
+
+  .closing-image-wrap {
+    position: absolute;
+    inset: 0;
+  }
+
+  .closing-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(8,8,8,0.97) 0%, rgba(8,8,8,0.5) 60%, rgba(8,8,8,0.2) 100%);
+  }
+
+  .closing-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 4rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .closing-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+  }
+
+  .closing-text {
+    font-family: var(--serif);
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    line-height: 1.8;
+    color: rgba(232,228,220,0.85);
+    font-style: italic;
+  }
+
+  /* Footer */
+  footer {
+    padding: 3rem 4rem;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer p {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: #333; }
+
+  /* Parallax layers */
+  .parallax-wrap {
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-sections { display: none; }
+    .hero-content { padding: 0 1.5rem; }
+    .section-header { padding: 4rem 1.5rem 2rem; flex-direction: column; gap: 0.5rem; }
+    .layout-full .caption-wrap { padding: 1.5rem 1.5rem 4rem; }
+    .layout-split, .layout-split-rev { grid-template-columns: 1fr; }
+    .layout-split .caption-wrap, .layout-split-rev .caption-wrap { padding: 2rem 1.5rem; border: none; border-top: 1px solid var(--line); order: 2; }
+    .layout-split-rev .image-wrap { order: 1; }
+    .layout-wide { padding: 0 1.5rem 3rem; }
+    .layout-portrait { grid-template-columns: 1fr; }
+    .layout-portrait .caption-wrap { padding: 2rem 1.5rem; border: none; border-top: 1px solid var(--line); }
+    .closing-content { padding: 0 1.5rem; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; }
+    .photo-placeholder { min-height: 260px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="glint" id="glint"></div>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-title">Glass as a Machine for Light</span>
+  <ul class="nav-sections">
+    <li><a href="#section-1">Surface</a></li>
+    <li><a href="#section-2">Refraction</a></li>
+    <li><a href="#section-3">Color</a></li>
+    <li><a href="#section-4">Stress</a></li>
+    <li><a href="#section-5">Process</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <img src="images\anthem_of_joy_in_glass_vera_liskova.png" class="hero-image" alt="Opening glass artwork">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">A Photo Essay</p>
+    <h1 class="hero-title">Glass as a Machine<br>for Light</h1>
+    <p class="hero-subtitle">How glass bends, stores, filters, and performs light across science and art</p>
+    <p class="hero-caption">Glass is often described as transparent, but transparency is not the absence of behavior. Throughout this course, I began to understand glass as an active optical material that bends, reflects, absorbs, and scatters light in highly controlled ways.</p>
+  </div>
+</section>
+
+<!-- SECTION 1: Surface & Light -->
+<div id="section-1"></div>
+<div class="section-header essay-entry">
+  <span class="section-number">Section 01</span>
+  <h2 class="section-title">Surface &amp; Light</h2>
+</div>
+
+<!-- Entry 2: Reflection vs Transmission -->
+<article class="essay-entry layout-split">
+  <div class="image-wrap">
+    <div class="photo-placeholder">
+      <div class="photo-placeholder-inner">
+        <span class="photo-placeholder-num">Image 02</span>
+        <span class="photo-placeholder-label">Window or polished glass surface — reflecting and transmitting light simultaneously</span>
+      </div>
+      <span class="upload-hint">Replace with your photo</span>
+    </div>
+    <!-- <img src="your-image-2.jpg" class="photo" alt="Reflection vs transmission"> -->
+  </div>
+  <div class="caption-wrap">
+    <span class="entry-num">02 — Reflection vs Transmission</span>
+    <p class="entry-caption">One of the first concepts that changed how I looked at glass was the <strong>STAR model</strong>: scattered, transmitted, absorbed, and reflected light together account for nearly all optical behavior. Even "clear" glass reflects part of the environment while transmitting the rest. Looking through glass always means looking at two images simultaneously: the world beyond the surface and the reflected world in front of it.</p>
+  </div>
+</article>
+
+<!-- Entry 3: Matte vs Polished -->
+<article class="essay-entry layout-full">
+  <div class="image-wrap" style="aspect-ratio: 21/9;">
+    <div class="photo-placeholder" style="min-height: 350px;">
+      <div class="photo-placeholder-inner">
+        <span class="photo-placeholder-num">Image 03</span>
+        <span class="photo-placeholder-label">Side-by-side: sanded glass and polished glass sample</span>
+      </div>
+      <span class="upload-hint">Replace with your photo</span>
+    </div>
+    <!-- <img src="your-image-3.jpg" class="photo" alt="Matte vs polished surface"> -->
+  </div>
+  <div class="caption-wrap">
+    <span class="entry-num">03 — Matte vs Polished Surface</span>
+    <p class="entry-caption">Coldworking made optical physics tactile. A rough matte surface <strong>scatters incoming light diffusely</strong>, causing glass to appear translucent or frosted. After polishing, the same material suddenly becomes transparent because the smoother surface reduces scattering and allows more coherent transmission. The difference visually appears dramatic, but physically it comes from microscopic changes in surface roughness.</p>
+  </div>
+</article>
+
+<!-- Entry 4: Grit Progression -->
+<article class="essay-entry layout-split-rev">
+  <div class="caption-wrap">
+    <span class="entry-num">04 — Grit Progression</span>
+    <p class="entry-caption">Each grit stage progressively removed larger scratches left by the previous abrasive. At coarse grits, the glass surface strongly scattered light, preventing clear image formation. As the scratches became smaller than visible wavelengths, the surface transitioned from opaque to transparent. <strong>Polishing therefore became less about "making something shiny" and more about engineering the path of light itself.</strong></p>
+  </div>
+  <div class="image-wrap">
+    <div class="photo-placeholder">
+      <div class="photo-placeholder-inner">
+        <span class="photo-placeholder-num">Image 04</span>
+        <span class="photo-placeholder-label">Sequential images of glass at multiple grit stages</span>
+      </div>
+      <span class="upload-hint">Replace with your photo</span>
+    </div>
+    <!-- <img src="your-image-4.jpg" class="photo" alt="Grit progression"> -->
+  </div>
+</article>
+
+<!-- Entry 5: Microscope -->
+<article class="essay-entry layout-wide">
+  <div class="image-wrap">
+    <div class="photo-placeholder" style="min-height: 500px;">
+      <div class="photo-placeholder-inner">
+        <span class="photo-placeholder-num">Image 05</span>
+        <span class="photo-placeholder-label">Microscope image — polished vs rough glass surface</span>
+      </div>
+      <span class="upload-hint">Replace with your photo</span>
+    </div>
+    <!-- <img src="your-image-5.jpg" class="photo" alt="Microscope surface image"> -->
+  </div>
+  <div class="caption-wrap">
+    <span class="entry-num">05 — Microscope Surface</span>
+    <p class="entry-caption">Under magnification, polished and roughened glass surfaces reveal entirely different optical landscapes. Deep scratches and irregularities act as <strong>scattering centers</strong> that redirect light into many directions. Observing the surface microscopically helped connect tactile processes directly to optical behavior.</p>
+  </div>
+</article>
+
+<!-- SECTION 2: Refraction & Internal Light -->
+<div id="section-2"></div>
+<div class="section-header essay-entry">
+  <span class="section-number">Section 02</span>
+  <h2 class="section-title">Refraction &amp; Internal Light</h2>
+</div>
+
+<!-- Entry 6: Thick Cast Glass -->
+<article class="essay-entry layout-portrait">
+  <div class="image-wrap">
+    <div class="photo-placeholder">
+      <div class="photo-placeholder-inner">
+        <span class="photo-placeholder-num">Image 06</span>
+        <span class="photo-placeholder-label">Thick cast glass sculpture from Corning or class reference</span>
+      </div>
+      <span class="upload-hint">Replace with your photo</span>
+    </div>
+    <!-- <img src="your-image-6.jpg" class="photo" alt="Thick cast glass piece"> -->
+  </div>
+  <div class="caption-wrap">
+    <span class="entry-num">06 — Thick Cast Glass</span>
+    <p class="entry-caption">Large cast glass sculptures behave almost like <strong>solidified lenses</strong>. Because glass has a higher refractive index than air, light bends as it enters and exits the material. Thick forms can trap, redirect, and internally reflect light, producing glowing regions that appear illuminated from within. The object becomes less like a solid sculpture and more like a volume of controlled optical pathways.</p>
+  </div>
+</article>
+
+<!-- Entry 7: Light Path Diagram -->
+<article class="essay-entry layout-split">
+  <div class="image-wrap">
+    <div class="photo-placeholder">
+      <div class="photo-placeholder-inner">
+        <span class="photo-placeholder-num">Image 07</span>
+        <span class="photo-placeholder-label">Annotated sketch or overlay diagram tracing refraction through curved glass</span>
+      </div>
+      <span class="upload-hint">Replace with your photo</span>
+    </div>
+    <!-- <img src="your-image-7.jpg" class="photo" alt="Light path diagram"> -->
+  </div>
+  <div class="caption-wrap">
+    <span class="entry-num">07 — Light Path Diagram</span>
+    <p class="entry-caption">Curved surfaces redirect light according to <strong>Snell's Law</strong>. In rounded glass forms, light entering from the sides can refract toward the center, creating brighter internal regions and darker edges. Artists such as Libenský and Brychtová intentionally used geometry to manipulate these effects, designing forms that shape light as much as mass.</p>
+  </div>
+</article>
+
+<!-- Entry 8: Total Internal Reflection -->
+<article class="essay-entry layout-full">
+  <div class="image-wrap" style="aspect-ratio: 16/8;">
+    <div class="photo-placeholder" style="min-height: 380px;">
+      <div class="photo-placeholder-inner">
+        <span class="photo-placeholder-num">Image 08</span>
+        <span class="photo-placeholder-label">Total internal reflection or edge glow in glass</span>
+      </div>
+      <span class="upload-hint">Replace with your photo</span>
+    </div>
+    <!-- <img src="your-image-8.jpg" class="photo" alt="Internal reflection"> -->
+  </div>
+  <div class="caption-wrap">
+    <span class="entry-num">08 — Internal Reflection</span>
+    <p class="entry-caption">When light traveling inside glass strikes the surface above the <strong>critical angle</strong>, it reflects internally instead of escaping. This phenomenon, called total internal reflection, allows glass to guide light through its interior. The same principle enables fiber optic communication systems, but in sculptural glass it creates glowing edges and luminous interiors.</p>
+  </div>
+</article>
+
+<!-- Entry 9: Fiber Optics -->
+<article class="essay-entry layout-split-rev">
+  <div class="caption-wrap">
+    <span class="entry-num">09 — Fiber Optics / Corning</span>
+    <p class="entry-caption">The Corning Museum made clear that the same material principles appear across both art and technology. <strong>Fiber optics use extremely pure glass</strong> to transmit information through controlled internal reflections. Scientific precision and aesthetic experience become closely related: both depend on manipulating how light moves through transparent matter.</p>
+  </div>
+  <div class="image-wrap">
+    <div class="photo-placeholder">
+      <div class="photo-placeholder-inner">
+        <span class="photo-placeholder-num">Image 09</span>
+        <span class="photo-placeholder-label">Corning Museum fiber optics exhibit</span>
+      </div>
+      <span class="upload-hint">Replace with your photo</span>
+    </div>
+    <!-- <img src="your-image-9.jpg" class="photo" alt="Fiber optics exhibit"> -->
+  </div>
+</article>
+
+<!-- SECTION 3: Color as Optical Behavior -->
+<div id="section-3"></div>
+<div class="section-header essay-entry">
+  <span class="section-number">Section 03</span>
+  <h2 class="section-title">Color as Optical Behavior</h2>
+</div>
+
+<!-- Entry 10: Colored Glass Thickness -->
+<article class="essay-entry layout-wide">
+  <div class="image-wrap">
+    <div class="photo-placeholder" style="min-height: 480px;">
+      <div class="photo-placeholder-inner">
+        <span class="photo-placeholder-num">Image 10</span>
+        <span class="photo-placeholder-label">Colored glass appearing darker in thicker regions</span>
+      </div>
+      <span class="upload-hint">Replace with your photo</span>
+    </div>
+    <!-- <img src="your-image-10.jpg" class="photo" alt="Colored glass thickness"> -->
+  </div>
+  <div class="caption-wrap">
+    <span class="entry-num">10 — Color in Thickness</span>
+    <p class="entry-caption">Color in glass is <strong>volumetric rather than purely surface-based</strong>. Thicker regions absorb more wavelengths because light travels farther through the material. As a result, the same glass composition can appear pale at thin edges and deeply saturated at thicker sections. Thickness therefore becomes a way of sculpting color itself.</p>
+  </div>
+</article>
+
+<!-- Entry 11: Dichroic -->
+<article class="essay-entry layout-split">
+  <div class="image-wrap">
+    <div class="photo-placeholder">
+      <div class="photo-placeholder-inner">
+        <span class="photo-placeholder-num">Image 11</span>
+        <span class="photo-placeholder-label">Neodymium or dichroic glass under two lighting conditions</span>
+      </div>
+      <span class="upload-hint">Replace with your photo</span>
+    </div>
+    <!-- <img src="your-image-11.jpg" class="photo" alt="Shift dichroic glass"> -->
+  </div>
+  <div class="caption-wrap">
+    <span class="entry-num">11 — Shift / Dichroic Glass</span>
+    <p class="entry-caption">Certain glasses change color depending on the illumination source. Rare earth ions such as <strong>neodymium contain narrow absorption bands</strong> that interact differently with fluorescent and incandescent light spectra. This means color is not fixed inside the object but emerges dynamically from the interaction between material and environment.</p>
+  </div>
+</article>
+
+<!-- Entry 12: Lycurgus Cup -->
+<article class="essay-entry layout-full">
+  <div class="image-wrap" style="aspect-ratio: 16/9;">
+    <div class="photo-placeholder" style="min-height: 400px;">
+      <div class="photo-placeholder-inner">
+        <span class="photo-placeholder-num">Image 12</span>
+        <span class="photo-placeholder-label">Lycurgus Cup in reflected vs transmitted light</span>
+      </div>
+      <span class="upload-hint">Replace with your photo</span>
+    </div>
+    <!-- <img src="your-image-12.jpg" class="photo" alt="Lycurgus Cup"> -->
+  </div>
+  <div class="caption-wrap">
+    <span class="entry-num">12 — The Lycurgus Cup</span>
+    <p class="entry-caption">The Lycurgus Cup demonstrates how <strong>metallic nanoparticles can radically alter optical behavior</strong>. In reflected light the cup appears green, while in transmitted light it glows red. Nanoparticles scatter and absorb different wavelengths depending on lighting geometry, producing one of history's earliest examples of nanophotonic color engineering.</p>
+  </div>
+</article>
+
+<!-- Entry 13: Tiffany -->
+<article class="essay-entry layout-split-rev">
+  <div class="caption-wrap">
+    <span class="entry-num">13 — Tiffany Favrile / Iridescent Glass</span>
+    <p class="entry-caption">Iridescent glass creates color not through pigments alone, but through <strong>thin-film interference</strong>. Light reflects from multiple interfaces within microscopic surface coatings, and certain wavelengths constructively interfere while others cancel out. As the viewing angle changes, the visible colors shift continuously across the surface.</p>
+  </div>
+  <div class="image-wrap">
+    <div class="photo-placeholder">
+      <div class="photo-placeholder-inner">
+        <span class="photo-placeholder-num">Image 13</span>
+        <span class="photo-placeholder-label">Tiffany iridescent glass</span>
+      </div>
+      <span class="upload-hint">Replace with your photo</span>
+    </div>
+    <!-- <img src="your-image-13.jpg" class="photo" alt="Tiffany iridescent glass"> -->
+  </div>
+</article>
+
+<!-- SECTION 4: Stress, Fragility, Memory -->
+<div id="section-4"></div>
+<div class="section-header essay-entry">
+  <span class="section-number">Section 04</span>
+  <h2 class="section-title">Stress, Fragility, Memory</h2>
+</div>
+
+<!-- Entry 14: Fracture -->
+<article class="essay-entry layout-full">
+  <div class="image-wrap" style="aspect-ratio: 21/9;">
+    <div class="photo-placeholder" style="min-height: 350px;">
+      <div class="photo-placeholder-inner">
+        <span class="photo-placeholder-num">Image 14</span>
+        <span class="photo-placeholder-label">Comparing fracture patterns in tempered vs annealed glass</span>
+      </div>
+      <span class="upload-hint">Replace with your photo</span>
+    </div>
+    <!-- <img src="your-image-14.jpg" class="photo" alt="Tempered vs annealed fracture"> -->
+  </div>
+  <div class="caption-wrap">
+    <span class="entry-num">14 — Tempered vs Annealed Fracture</span>
+    <p class="entry-caption">Glass failure patterns reveal hidden internal stress states. Annealed glass fractures into large, dangerous shards because cracks propagate freely. Tempered glass contains <strong>compressive surface stress</strong> that interrupts crack propagation, causing it to fragment into smaller pieces. Stress therefore becomes visible only at the moment of failure.</p>
+  </div>
+</article>
+
+<!-- Entry 15: Polarized Stress -->
+<article class="essay-entry layout-portrait">
+  <div class="image-wrap">
+    <div class="photo-placeholder">
+      <div class="photo-placeholder-inner">
+        <span class="photo-placeholder-num">Image 15</span>
+        <span class="photo-placeholder-label">Polarized-light image showing stress patterns in glass</span>
+      </div>
+      <span class="upload-hint">Replace with your photo</span>
+    </div>
+    <!-- <img src="your-image-15.jpg" class="photo" alt="Polarized stress image"> -->
+  </div>
+  <div class="caption-wrap">
+    <span class="entry-num">15 — Polarized Stress</span>
+    <p class="entry-caption">Under polarized light, <strong>internal stress becomes visible as bands of color</strong>. These stress patterns form because strained regions alter how light travels through the glass. What normally appears optically invisible suddenly emerges as a complex internal map of thermal history and mechanical forces.</p>
+  </div>
+</article>
+
+<!-- Entry 16: Kiln Schedule -->
+<article class="essay-entry layout-split">
+  <div class="image-wrap">
+    <div class="photo-placeholder">
+      <div class="photo-placeholder-inner">
+        <span class="photo-placeholder-num">Image 16</span>
+        <span class="photo-placeholder-label">Kiln schedule graph or firing program</span>
+      </div>
+      <span class="upload-hint">Replace with your photo</span>
+    </div>
+    <!-- <img src="your-image-16.jpg" class="photo" alt="Kiln schedule"> -->
+  </div>
+  <div class="caption-wrap">
+    <span class="entry-num">16 — Kiln Schedule / Annealing</span>
+    <p class="entry-caption">Annealing is fundamentally about <strong>controlling how quickly thermal energy leaves the material</strong>. If the exterior cools too rapidly compared to the interior, stress accumulates as different regions contract unevenly. The kiln schedule therefore functions as both a scientific protocol and a choreography of molecular relaxation.</p>
+  </div>
+</article>
+
+<!-- SECTION 5: Process & Transformation -->
+<div id="section-5"></div>
+<div class="section-header essay-entry">
+  <span class="section-number">Section 05</span>
+  <h2 class="section-title">Process &amp; Transformation</h2>
+</div>
+
+<!-- Entry 17: Wax Model -->
+<article class="essay-entry layout-split-rev">
+  <div class="caption-wrap">
+    <span class="entry-num">17 — Wax Model / Mold</span>
+    <p class="entry-caption">Kilncasting transforms materials through multiple states: <strong>wax becomes void, molten glass becomes solid</strong>, and temporary molds disappear after firing. Each stage leaves traces in the final object. The process revealed how glassmaking is less about imposing form onto matter and more about negotiating with thermal flow, viscosity, gravity, and time.</p>
+  </div>
+  <div class="image-wrap">
+    <div class="photo-placeholder">
+      <div class="photo-placeholder-inner">
+        <span class="photo-placeholder-num">Image 17</span>
+        <span class="photo-placeholder-label">Wax model or mold-making process</span>
+      </div>
+      <span class="upload-hint">Replace with your photo</span>
+    </div>
+    <!-- <img src="your-image-17.jpg" class="photo" alt="Wax model mold"> -->
+  </div>
+</article>
+
+<!-- Entry 18: Molten Glass -->
+<article class="essay-entry layout-full">
+  <div class="image-wrap" style="aspect-ratio: 16/9;">
+    <div class="photo-placeholder" style="min-height: 420px;">
+      <div class="photo-placeholder-inner">
+        <span class="photo-placeholder-num">Image 18</span>
+        <span class="photo-placeholder-label">Molten glass in kiln or furnace</span>
+      </div>
+      <span class="upload-hint">Replace with your photo</span>
+    </div>
+    <!-- <img src="your-image-18.jpg" class="photo" alt="Molten glass furnace"> -->
+  </div>
+  <div class="caption-wrap">
+    <span class="entry-num">18 — Molten Glass / Furnace</span>
+    <p class="entry-caption">At high temperatures, glass exists in <strong>a state between liquid and solid</strong>. Its viscosity changes continuously rather than abruptly, allowing it to slowly deform, flow, and settle into molds. Observing molten glass challenged my assumptions about materials existing in fixed states.</p>
+  </div>
+</article>
+
+<!-- Entry 19: Your Own Work -->
+<article class="essay-entry layout-portrait">
+  <div class="image-wrap">
+    <div class="photo-placeholder">
+      <div class="photo-placeholder-inner">
+        <span class="photo-placeholder-num">Image 19</span>
+        <span class="photo-placeholder-label">Your own cast or polished glass piece</span>
+      </div>
+      <span class="upload-hint">Replace with your photo</span>
+    </div>
+    <!-- <img src="your-image-19.jpg" class="photo" alt="My own cast piece"> -->
+  </div>
+  <div class="caption-wrap">
+    <span class="entry-num">19 — My Own Work</span>
+    <p class="entry-caption">My own interaction with glass shifted from seeing it as a passive material to understanding it as an <strong>optical and thermal system</strong>. Surface finish, thickness, cooling history, and lighting conditions all became embedded into the final appearance of the work. Material process and scientific behavior could no longer be separated.</p>
+  </div>
+</article>
+
+<!-- CLOSING -->
+<section class="closing">
+  <div class="closing-image-wrap">
+    <div class="photo-placeholder" style="height: 100%; min-height: 600px; border: none;">
+      <div class="photo-placeholder-inner">
+        <span class="photo-placeholder-num">Image 20</span>
+        <span class="photo-placeholder-label">Atmospheric — light passing through glass at Corning or studio</span>
+      </div>
+      <span class="upload-hint">Replace with closing image</span>
+    </div>
+    <!-- <img src="your-image-20.jpg" class="photo" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(0.7);" alt="Closing image"> -->
+  </div>
+  <div class="closing-overlay"></div>
+  <div class="closing-content">
+    <p class="closing-label">Conclusion</p>
+    <p class="closing-text">By the end of the semester, I no longer experienced glass simply as transparent. I began to see it as a material that stores heat histories, redirects light, reveals stress, and transforms depending on angle, thickness, and illumination. The science of glass did not reduce its mystery; instead, understanding the physics made its visual behavior feel even more complex and alive.</p>
+  </div>
+</section>
+
+<footer>
+  <p>Glass as a Machine for Light &mdash; Photo Essay</p>
+  <p>Scroll to explore &uarr;</p>
+</footer>
+
+<script>
+  // Glint cursor
+  const glint = document.getElementById('glint');
+  document.addEventListener('mousemove', e => {
+    glint.style.left = e.clientX + 'px';
+    glint.style.top = e.clientY + 'px';
+  });
+
+  // Scroll reveal
+  const entries = document.querySelectorAll('.essay-entry');
+  const observer = new IntersectionObserver((items) => {
+    items.forEach(item => {
+      if (item.isIntersecting) {
+        item.target.classList.add('visible');
+        observer.unobserve(item.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+
+  entries.forEach(el => observer.observe(el));
+
+  // Subtle parallax on photo placeholders (and real photos)
+  const parallaxWraps = document.querySelectorAll('.image-wrap');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    parallaxWraps.forEach(wrap => {
+      const rect = wrap.getBoundingClientRect();
+      const centerY = rect.top + rect.height / 2;
+      const viewH = window.innerHeight;
+      const offset = (centerY - viewH / 2) * 0.06;
+      const inner = wrap.querySelector('.photo, .photo-placeholder');
+      if (inner) inner.style.transform = `translateY(${offset}px)`;
+    });
+  }, { passive: true });
+</script>
+</body>
+</html>
