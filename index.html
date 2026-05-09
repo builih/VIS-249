@@ -146,23 +146,7 @@
     margin-bottom: 1.5rem;
   }
 
-  .marquee {
-    position: relative;
-    margin-bottom: 1rem;
-  }
-
-  .marquee_blur {
-    filter: blur(8px);
-    opacity: 0.7;
-  }
-
-  .marquee_clear {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-
-  .marquee_text {
+  .hero-title {
     font-family: var(--serif);
     font-size: clamp(3rem, 7vw, 7rem);
     font-weight: 400;
@@ -170,14 +154,15 @@
     letter-spacing: -0.02em;
     text-shadow: 0 0 16px rgba(232,228,220,0.5), 0 0 28px rgba(200,184,154,0.3);
     animation: pulse-glow 2s ease-in-out infinite;
+    margin-bottom: 1rem;
   }
 
   @keyframes pulse-glow {
     0%, 100% {
-      text-shadow: 0 0 16px rgba(232,228,220,0.5), 0 0 28px rgba(200,184,154,0.3);
+      text-shadow: 0 0 16px rgba(232,228,220,0.8), 0 0 28px rgba(200,184,154,0.6);
     }
     50% {
-      text-shadow: 0 0 16px rgba(232,228,220,0.2), 0 0 28px rgba(200,184,154,0.1);
+      text-shadow: 0 0 16px rgba(232,228,220,0.4), 0 0 28px rgba(200,184,154,0.25);
     }
   }
 
@@ -556,16 +541,9 @@
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <p class="hero-eyebrow">A Photo Essay</p>
-  <div class="marquee">
-    <div class="marquee_blur" aria-hidden="true">
-      <p class="marquee_text">Glass as a Machine<br>for Light</p>
-    </div>
-    <div class="marquee_clear">
-      <p class="marquee_text">Glass as a Machine<br>for Light</p>
-    </div>
-  </div>
+    <h1 class="hero-title">Glass as a Machine for Light</h1>
     <p class="hero-subtitle">How glass bends, stores, filters, and performs light across science and art</p>
-    <p class="hero-caption">Glass is often described as transparent, but transparency is not the absence of behavior. Throughout this course, I learned to understand glass as an active optical material that bends, reflects, absorbs, and scatters light in highly controlled ways.</p>
+    <p class="hero-caption">Glass is often described as transparent, but transparency is not the absence of behavior, nor is glass always transparent. Throughout this course, I learned to understand glass as an active optical material that bends, reflects, absorbs, and scatters light in highly controlled ways.</p>
     <p class="image-credit">
       Image credit: Vera Lišková, Anthem of Joy in Glass.
       <a href="https://glasscollection.cmog.org/objects/19447/anthem-of-joy-in-glass" target="_blank" rel="noopener">
@@ -606,7 +584,7 @@
   </div>
   <div class="caption-wrap">
     <span class="entry-num">03 — Matte vs Polished Surface</span>
-    <p class="entry-caption">Coldworking made optical physics tactile. A rough matte surface <strong>scatters incoming light diffusely</strong>, causing glass to appear translucent or frosted. After polishing, the same material suddenly becomes transparent because the smoother surface reduces scattering and allows more coherent transmission. The difference visually appears dramatic, but physically it comes from microscopic changes in surface roughness.</p>
+    <p class="entry-caption">Coldworking made optical physics tactile. A rough matte surface <strong>scatters incoming light diffusely</strong>, causing glass to appear translucent or frosted. After polishing, the same material suddenly becomes transparent because the smoother surface reduces scattering and allows more coherent transmission. The difference appears visually dramatic, but physically comes from microscopic changes in surface roughness.</p>
     <p class="image-credit">
       Image credit: Anna Alsina Bardagi, Siren.
       <a href="https://www.annaalsina.com/blog/glass-casting-tips/polishing-glass/" target="_blank" rel="noopener">
@@ -711,15 +689,15 @@
   <div class="caption-wrap">
     <span class="entry-num">09 — Fiber Optics / Corning</span>
     <p class="entry-caption">The Corning Museum made clear that the same material principles appear across both art and technology. <strong>Fiber optics use extremely pure glass</strong> to transmit information through controlled internal reflections. Scientific precision and aesthetic experience become closely related: both depend on manipulating how light moves through transparent matter.</p>
-  </div>
-  <div class="image-wrap">
-    <img src="images/fiber_optics.jpg" class="photo" alt="Fiber optics exhibit">
     <p class="image-credit">
       Image credit: Chris Christensen, Glass Fiber.
       <a href="https://amateurtraveler.com/visiting-corning-glass-museum/" target="_blank" rel="noopener">
         Source
       </a>
     </p>
+  </div>
+  <div class="image-wrap">
+    <img src="images/fiber_optics.jpg" class="photo" alt="Fiber optics exhibit">
   </div>
 </article>
 
@@ -755,7 +733,7 @@
   </div>
   <div class="caption-wrap">
     <span class="entry-num">11 — Shift / Dichroic Glass</span>
-    <p class="entry-caption">Certain glasses change color depending on the illumination source. Rare earth ions such as <strong>neodymium contain narrow absorption bands</strong> that interact differently with fluorescent and incandescent light spectra. This means color is not fixed inside the object but emerges dynamically from the interaction between material and environment.</p>
+    <p class="entry-caption">Certain glasses change color depending on the illumination source. Rare earth ions such as <strong>neodymium contain narrow absorption bands</strong> that interact differently with fluorescent and incandescent light spectra. This means color is not fixed inside the object but can also emerge from interactions between material and environment.</p>
     <p class="image-credit">
       Image credit: Facebook, Neodymium glass.
       <a href="https://www.facebook.com/butterflybabegallery/posts/neodymium-glass-sometimes-referred-to-as-alexandrite-glass-changes-color-accordi/1025133412312204/" target="_blank" rel="noopener">
@@ -813,7 +791,7 @@
   </div>
   <div class="caption-wrap">
     <span class="entry-num">14 — Tempered vs Annealed Fracture</span>
-    <p class="entry-caption">Glass failure patterns reveal hidden internal stress states. Annealed glass fractures into large, dangerous shards because cracks propagate freely. Tempered glass contains <strong>compressive surface stress</strong> that interrupts crack propagation, causing it to fragment into smaller pieces. Stress therefore becomes visible only at the moment of failure.</p>
+    <p class="entry-caption">Glass failure patterns reveal hidden internal stress states. Annealed glass fractures into large, dangerous shards because cracks propagate freely. Tempered glass contains <strong>compressive surface stress</strong> that interrupts crack propagation, causing it to fragment into smaller pieces. </p>
     <p class="image-credit">
       Image credit: Granbury Door and Window, Tempered Glass vs. Annealed Glass.
       <a href="https://granburydoorandwindow.net/tempered-glass-vs-annealed-glass/" target="_blank" rel="noopener">
@@ -830,7 +808,7 @@
   </div>
   <div class="caption-wrap">
     <span class="entry-num">15 — Polarized Stress</span>
-    <p class="entry-caption">Under polarized light, <strong>internal stress becomes visible as bands of color</strong>. These stress patterns form because strained regions alter how light travels through the glass. What normally appears optically invisible suddenly emerges as a complex internal map of thermal history and mechanical forces.</p>
+    <p class="entry-caption">Under polarized light, <strong>internal stress becomes visible as bands of color</strong>. These stress patterns form because strained regions alter how light travels through the glass. What normally appears invisible emerges as a complex internal map of thermal history and mechanical forces.</p>
     <p class="image-credit">
       Image credit: Yiling Li, VIS249 Flameworking.
   </div>
@@ -864,7 +842,7 @@
 <article class="essay-entry layout-split-rev">
   <div class="caption-wrap">
     <span class="entry-num">17 — Wax Model / Mold</span>
-    <p class="entry-caption">Kilncasting transforms materials through multiple states: <strong>wax becomes void, molten glass becomes solid</strong>, and temporary molds disappear after firing. Each stage leaves traces in the final object. The process revealed how glassmaking is less about imposing form onto matter and more about negotiating with thermal flow, viscosity, gravity, and time.</p>
+    <p class="entry-caption">Kilncasting transforms materials through multiple states: <strong>wax becomes void, molten glass becomes solid</strong>, and rigid molds must be crumbled off after firing. Each stage leaves traces in the final object. The process revealed how glassmaking is less about imposing form onto matter and more about negotiating with thermal flow, viscosity, gravity, and time.</p>
     <p class="image-credit">
       Image credit: Yiling Li, VIS249 Kilncasting.
     </p>
