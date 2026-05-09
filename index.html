@@ -153,6 +153,7 @@
     line-height: 1.05;
     letter-spacing: -0.02em;
     margin-bottom: 1rem;
+    text-shadow: 0 0 16px rgba(232,228,220,0.35), 0 0 28px rgba(200,184,154,0.18);
   }
 
   .hero-subtitle {
@@ -207,6 +208,17 @@
   .essay-entry.visible {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  .image-credit {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: rgba(232, 228, 220, 0.245);
+    margin-top: 1rem;
+  }
+  .image-credit a {
+    color: rgba(232,228,220,0.245);
+    text-decoration: underline;
   }
 
   /* Full-width image */
@@ -277,7 +289,6 @@
 
   .layout-wide .image-wrap {
     width: 100%;
-    aspect-ratio: 3/2;
     overflow: hidden;
     position: relative;
     margin-bottom: 0;
@@ -286,7 +297,7 @@
   .layout-wide .caption-wrap {
     margin-left: auto;
     max-width: 520px;
-    padding: 2rem 0 0 0;
+    padding: 0 0 0 0;
   }
 
   /* Tall portrait */
@@ -313,10 +324,18 @@
   .photo {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
     filter: saturate(0.85);
     transition: filter 0.6s, transform 0.8s;
+  }
+
+  .photo.small {
+    width: auto;
+    max-width: 700px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
   }
 
   .image-wrap:hover .photo {
@@ -515,6 +534,12 @@
     <h1 class="hero-title">Glass as a Machine<br>for Light</h1>
     <p class="hero-subtitle">How glass bends, stores, filters, and performs light across science and art</p>
     <p class="hero-caption">Glass is often described as transparent, but transparency is not the absence of behavior. Throughout this course, I began to understand glass as an active optical material that bends, reflects, absorbs, and scatters light in highly controlled ways.</p>
+    <p class="image-credit">
+      Image credit: Vera Lišková, Anthem of Joy in Glass.
+      <a href="https://glasscollection.cmog.org/objects/19447/anthem-of-joy-in-glass" target="_blank" rel="noopener">
+        Source
+      </a>
+    </p>
   </div>
 </section>
 
@@ -528,36 +553,34 @@
 <!-- Entry 2: Reflection vs Transmission -->
 <article class="essay-entry layout-split">
   <div class="image-wrap">
-    <div class="photo-placeholder">
-      <div class="photo-placeholder-inner">
-        <span class="photo-placeholder-num">Image 02</span>
-        <span class="photo-placeholder-label">Window or polished glass surface — reflecting and transmitting light simultaneously</span>
-      </div>
-      <span class="upload-hint">Replace with your photo</span>
-    </div>
-    <!-- <img src="your-image-2.jpg" class="photo" alt="Reflection vs transmission"> -->
+    <img src="images/window_reflection.jpeg" class="photo" alt="Reflection vs transmission">
   </div>
   <div class="caption-wrap">
     <span class="entry-num">02 — Reflection vs Transmission</span>
     <p class="entry-caption">One of the first concepts that changed how I looked at glass was the <strong>STAR model</strong>: scattered, transmitted, absorbed, and reflected light together account for nearly all optical behavior. Even "clear" glass reflects part of the environment while transmitting the rest. Looking through glass always means looking at two images simultaneously: the world beyond the surface and the reflected world in front of it.</p>
+    <p class="image-credit">
+      Image credit: SketchUp Forums, Window pane reflection distortion.
+      <a href="https://forums.sketchup.com/t/window-pane-reflection-distortion/124122" target="_blank" rel="noopener">
+        Source
+      </a>
+    </p>
   </div>
 </article>
 
 <!-- Entry 3: Matte vs Polished -->
 <article class="essay-entry layout-full">
   <div class="image-wrap" style="aspect-ratio: 21/9;">
-    <div class="photo-placeholder" style="min-height: 350px;">
-      <div class="photo-placeholder-inner">
-        <span class="photo-placeholder-num">Image 03</span>
-        <span class="photo-placeholder-label">Side-by-side: sanded glass and polished glass sample</span>
-      </div>
-      <span class="upload-hint">Replace with your photo</span>
-    </div>
-    <!-- <img src="your-image-3.jpg" class="photo" alt="Matte vs polished surface"> -->
+    <img src="images/polishing-optical-glass-sculpture-siren-1.jpg" class="photo" alt="Matte vs polished surface">
   </div>
   <div class="caption-wrap">
     <span class="entry-num">03 — Matte vs Polished Surface</span>
     <p class="entry-caption">Coldworking made optical physics tactile. A rough matte surface <strong>scatters incoming light diffusely</strong>, causing glass to appear translucent or frosted. After polishing, the same material suddenly becomes transparent because the smoother surface reduces scattering and allows more coherent transmission. The difference visually appears dramatic, but physically it comes from microscopic changes in surface roughness.</p>
+    <p class="image-credit">
+      Image credit: Anna Alsina Bardagi, Siren.
+      <a href="https://www.annaalsina.com/blog/glass-casting-tips/polishing-glass/" target="_blank" rel="noopener">
+        Source
+      </a>
+    </p>
   </div>
 </article>
 
@@ -566,34 +589,33 @@
   <div class="caption-wrap">
     <span class="entry-num">04 — Grit Progression</span>
     <p class="entry-caption">Each grit stage progressively removed larger scratches left by the previous abrasive. At coarse grits, the glass surface strongly scattered light, preventing clear image formation. As the scratches became smaller than visible wavelengths, the surface transitioned from opaque to transparent. <strong>Polishing therefore became less about "making something shiny" and more about engineering the path of light itself.</strong></p>
+    <p class="image-credit">
+      Image credit: Glass with a Past, Polished Strips.
+      <a href="https://glasswithapast.com/knowledgebase/coldworking-and-fire-polishing/" target="_blank" rel="noopener">
+        Source
+      </a>
+    </p>
   </div>
   <div class="image-wrap">
-    <div class="photo-placeholder">
-      <div class="photo-placeholder-inner">
-        <span class="photo-placeholder-num">Image 04</span>
-        <span class="photo-placeholder-label">Sequential images of glass at multiple grit stages</span>
-      </div>
-      <span class="upload-hint">Replace with your photo</span>
-    </div>
-    <!-- <img src="your-image-4.jpg" class="photo" alt="Grit progression"> -->
+    <img src="images/polishedstripsnew.webp" class="photo" alt="Grit progression">
   </div>
 </article>
 
 <!-- Entry 5: Microscope -->
 <article class="essay-entry layout-wide">
   <div class="image-wrap">
-    <div class="photo-placeholder" style="min-height: 500px;">
-      <div class="photo-placeholder-inner">
-        <span class="photo-placeholder-num">Image 05</span>
-        <span class="photo-placeholder-label">Microscope image — polished vs rough glass surface</span>
-      </div>
-      <span class="upload-hint">Replace with your photo</span>
-    </div>
-    <!-- <img src="your-image-5.jpg" class="photo" alt="Microscope surface image"> -->
+    <img src="images/Examples-of-edge-finishing.jpg" class="photo small" alt="Microscope surface image">
   </div>
+  <br></br>
   <div class="caption-wrap">
     <span class="entry-num">05 — Microscope Surface</span>
     <p class="entry-caption">Under magnification, polished and roughened glass surfaces reveal entirely different optical landscapes. Deep scratches and irregularities act as <strong>scattering centers</strong> that redirect light into many directions. Observing the surface microscopically helped connect tactile processes directly to optical behavior.</p>
+    <p class="image-credit">
+      Image credit: Bukieda et al., Glass edges after grinding and polishing process.
+      <a href="https://www.glassonweb.com/article/study-optical-quality-and-strength-glass-edges-after-grinding-and-polishing-process" target="_blank" rel="noopener">
+        Source
+      </a>
+    </p>
   </div>
 </article>
 
@@ -607,54 +629,48 @@
 <!-- Entry 6: Thick Cast Glass -->
 <article class="essay-entry layout-portrait">
   <div class="image-wrap">
-    <div class="photo-placeholder">
-      <div class="photo-placeholder-inner">
-        <span class="photo-placeholder-num">Image 06</span>
-        <span class="photo-placeholder-label">Thick cast glass sculpture from Corning or class reference</span>
-      </div>
-      <span class="upload-hint">Replace with your photo</span>
-    </div>
-    <!-- <img src="your-image-6.jpg" class="photo" alt="Thick cast glass piece"> -->
+    <img src="images/Yiling-blob.JPEG" class="photo" alt="Thick cast glass piece">
   </div>
   <div class="caption-wrap">
     <span class="entry-num">06 — Thick Cast Glass</span>
     <p class="entry-caption">Large cast glass sculptures behave almost like <strong>solidified lenses</strong>. Because glass has a higher refractive index than air, light bends as it enters and exits the material. Thick forms can trap, redirect, and internally reflect light, producing glowing regions that appear illuminated from within. The object becomes less like a solid sculpture and more like a volume of controlled optical pathways.</p>
+    <p class="image-credit">
+      Image credit: Yiling Li, VIS249 Project 1.
+    </p>
   </div>
 </article>
 
 <!-- Entry 7: Light Path Diagram -->
 <article class="essay-entry layout-split">
   <div class="image-wrap">
-    <div class="photo-placeholder">
-      <div class="photo-placeholder-inner">
-        <span class="photo-placeholder-num">Image 07</span>
-        <span class="photo-placeholder-label">Annotated sketch or overlay diagram tracing refraction through curved glass</span>
-      </div>
-      <span class="upload-hint">Replace with your photo</span>
-    </div>
-    <!-- <img src="your-image-7.jpg" class="photo" alt="Light path diagram"> -->
+    <img src="images/fig8.webp" class="photo" alt="Light path diagram">
   </div>
   <div class="caption-wrap">
     <span class="entry-num">07 — Light Path Diagram</span>
     <p class="entry-caption">Curved surfaces redirect light according to <strong>Snell's Law</strong>. In rounded glass forms, light entering from the sides can refract toward the center, creating brighter internal regions and darker edges. Artists such as Libenský and Brychtová intentionally used geometry to manipulate these effects, designing forms that shape light as much as mass.</p>
+    <p class="image-credit">
+      Image credit: David Hukins, Refraction at curved surfaces.
+      <a href="https://thinking-about-science.com/2022/02/01/22-1-refraction-at-curved-surfaces-lenses/" target="_blank" rel="noopener">
+        Source
+      </a>
+    </p>
   </div>
 </article>
 
 <!-- Entry 8: Total Internal Reflection -->
 <article class="essay-entry layout-full">
   <div class="image-wrap" style="aspect-ratio: 16/8;">
-    <div class="photo-placeholder" style="min-height: 380px;">
-      <div class="photo-placeholder-inner">
-        <span class="photo-placeholder-num">Image 08</span>
-        <span class="photo-placeholder-label">Total internal reflection or edge glow in glass</span>
-      </div>
-      <span class="upload-hint">Replace with your photo</span>
-    </div>
-    <!-- <img src="your-image-8.jpg" class="photo" alt="Internal reflection"> -->
+    <img src="images/red_pyramid.jpg" class="photo" alt="Internal reflection">
   </div>
   <div class="caption-wrap">
     <span class="entry-num">08 — Internal Reflection</span>
     <p class="entry-caption">When light traveling inside glass strikes the surface above the <strong>critical angle</strong>, it reflects internally instead of escaping. This phenomenon, called total internal reflection, allows glass to guide light through its interior. The same principle enables fiber optic communication systems, but in sculptural glass it creates glowing edges and luminous interiors.</p>
+    <p class="image-credit">
+      Image credit: Stanislav Libenský & Jaroslava Brychtová, Red Pyramid.
+      <a href="https://glasscollection.cmog.org/objects/34503/red-pyramid" target="_blank" rel="noopener">
+        Source
+      </a>
+    </p>
   </div>
 </article>
 
@@ -665,14 +681,13 @@
     <p class="entry-caption">The Corning Museum made clear that the same material principles appear across both art and technology. <strong>Fiber optics use extremely pure glass</strong> to transmit information through controlled internal reflections. Scientific precision and aesthetic experience become closely related: both depend on manipulating how light moves through transparent matter.</p>
   </div>
   <div class="image-wrap">
-    <div class="photo-placeholder">
-      <div class="photo-placeholder-inner">
-        <span class="photo-placeholder-num">Image 09</span>
-        <span class="photo-placeholder-label">Corning Museum fiber optics exhibit</span>
-      </div>
-      <span class="upload-hint">Replace with your photo</span>
-    </div>
-    <!-- <img src="your-image-9.jpg" class="photo" alt="Fiber optics exhibit"> -->
+    <img src="images/fiber_optics.jpg" class="photo" alt="Fiber optics exhibit">
+    <p class="image-credit">
+      Image credit: Chris Christensen, Glass Fiber.
+      <a href="https://amateurtraveler.com/visiting-corning-glass-museum/" target="_blank" rel="noopener">
+        Source
+      </a>
+    </p>
   </div>
 </article>
 
@@ -686,54 +701,52 @@
 <!-- Entry 10: Colored Glass Thickness -->
 <article class="essay-entry layout-wide">
   <div class="image-wrap">
-    <div class="photo-placeholder" style="min-height: 480px;">
-      <div class="photo-placeholder-inner">
-        <span class="photo-placeholder-num">Image 10</span>
-        <span class="photo-placeholder-label">Colored glass appearing darker in thicker regions</span>
-      </div>
-      <span class="upload-hint">Replace with your photo</span>
-    </div>
-    <!-- <img src="your-image-10.jpg" class="photo" alt="Colored glass thickness"> -->
+    <img src="images/vases on white.jpg" class="photo" alt="Colored glass thickness" style="max-width: 50%; margin: 0 auto;">
   </div>
+  <br></br>
   <div class="caption-wrap">
     <span class="entry-num">10 — Color in Thickness</span>
     <p class="entry-caption">Color in glass is <strong>volumetric rather than purely surface-based</strong>. Thicker regions absorb more wavelengths because light travels farther through the material. As a result, the same glass composition can appear pale at thin edges and deeply saturated at thicker sections. Thickness therefore becomes a way of sculpting color itself.</p>
+    <p class="image-credit">
+      Image credit: Corning Museum of Glass, Mold-Blown Vase.
+      <a href="https://glassmaking.cmog.org/myog/mold-blown-vase" target="_blank" rel="noopener">
+        Source
+      </a>
+    </p>
   </div>
 </article>
 
 <!-- Entry 11: Dichroic -->
 <article class="essay-entry layout-split">
   <div class="image-wrap">
-    <div class="photo-placeholder">
-      <div class="photo-placeholder-inner">
-        <span class="photo-placeholder-num">Image 11</span>
-        <span class="photo-placeholder-label">Neodymium or dichroic glass under two lighting conditions</span>
-      </div>
-      <span class="upload-hint">Replace with your photo</span>
-    </div>
-    <!-- <img src="your-image-11.jpg" class="photo" alt="Shift dichroic glass"> -->
+    <img src="images/color_change.jpg" class="photo" alt="Shift dichroic glass">
   </div>
   <div class="caption-wrap">
     <span class="entry-num">11 — Shift / Dichroic Glass</span>
     <p class="entry-caption">Certain glasses change color depending on the illumination source. Rare earth ions such as <strong>neodymium contain narrow absorption bands</strong> that interact differently with fluorescent and incandescent light spectra. This means color is not fixed inside the object but emerges dynamically from the interaction between material and environment.</p>
+    <p class="image-credit">
+      Image credit: Facebook, Neodymium glass.
+      <a href="https://www.facebook.com/butterflybabegallery/posts/neodymium-glass-sometimes-referred-to-as-alexandrite-glass-changes-color-accordi/1025133412312204/" target="_blank" rel="noopener">
+        Source
+      </a>
+    </p>
   </div>
 </article>
 
 <!-- Entry 12: Lycurgus Cup -->
 <article class="essay-entry layout-full">
   <div class="image-wrap" style="aspect-ratio: 16/9;">
-    <div class="photo-placeholder" style="min-height: 400px;">
-      <div class="photo-placeholder-inner">
-        <span class="photo-placeholder-num">Image 12</span>
-        <span class="photo-placeholder-label">Lycurgus Cup in reflected vs transmitted light</span>
-      </div>
-      <span class="upload-hint">Replace with your photo</span>
-    </div>
-    <!-- <img src="your-image-12.jpg" class="photo" alt="Lycurgus Cup"> -->
+    <img src="images/lycurgus-cup-32.jpg" class="photo" alt="Lycurgus Cup" style="max-width: 50%; margin: 0 auto;">
   </div>
-  <div class="caption-wrap">
+  <div class="caption-wrap" style="padding-top: 0; margin-top: -8rem;">
     <span class="entry-num">12 — The Lycurgus Cup</span>
     <p class="entry-caption">The Lycurgus Cup demonstrates how <strong>metallic nanoparticles can radically alter optical behavior</strong>. In reflected light the cup appears green, while in transmitted light it glows red. Nanoparticles scatter and absorb different wavelengths depending on lighting geometry, producing one of history's earliest examples of nanophotonic color engineering.</p>
+    <p class="image-credit">
+      Image credit: Kaushik Patowary, Lycurgus Cup.
+      <a href="https://www.amusingplanet.com/2016/12/lycurgus-cup-piece-of-ancient-roman.html" target="_blank" rel="noopener">
+        Source
+      </a>
+    </p>
   </div>
 </article>
 
@@ -742,16 +755,15 @@
   <div class="caption-wrap">
     <span class="entry-num">13 — Tiffany Favrile / Iridescent Glass</span>
     <p class="entry-caption">Iridescent glass creates color not through pigments alone, but through <strong>thin-film interference</strong>. Light reflects from multiple interfaces within microscopic surface coatings, and certain wavelengths constructively interfere while others cancel out. As the viewing angle changes, the visible colors shift continuously across the surface.</p>
+    <p class="image-credit">
+      Image credit: Tiffany Studios, "Pansy" Vase.
+      <a href="https://glasscollection.cmog.org/objects/5651/pansy" target="_blank" rel="noopener">
+        Source
+      </a>
+    </p>
   </div>
   <div class="image-wrap">
-    <div class="photo-placeholder">
-      <div class="photo-placeholder-inner">
-        <span class="photo-placeholder-num">Image 13</span>
-        <span class="photo-placeholder-label">Tiffany iridescent glass</span>
-      </div>
-      <span class="upload-hint">Replace with your photo</span>
-    </div>
-    <!-- <img src="your-image-13.jpg" class="photo" alt="Tiffany iridescent glass"> -->
+    <img src="images/pansy.jpeg" class="photo" alt="Tiffany iridescent glass" style="max-width: 75%; margin: 0 auto;">
   </div>
 </article>
 
@@ -765,54 +777,47 @@
 <!-- Entry 14: Fracture -->
 <article class="essay-entry layout-full">
   <div class="image-wrap" style="aspect-ratio: 21/9;">
-    <div class="photo-placeholder" style="min-height: 350px;">
-      <div class="photo-placeholder-inner">
-        <span class="photo-placeholder-num">Image 14</span>
-        <span class="photo-placeholder-label">Comparing fracture patterns in tempered vs annealed glass</span>
-      </div>
-      <span class="upload-hint">Replace with your photo</span>
-    </div>
-    <!-- <img src="your-image-14.jpg" class="photo" alt="Tempered vs annealed fracture"> -->
+    <img src="images/tempered-glass.webp" class="photo" alt="Tempered vs annealed fracture">
   </div>
   <div class="caption-wrap">
     <span class="entry-num">14 — Tempered vs Annealed Fracture</span>
     <p class="entry-caption">Glass failure patterns reveal hidden internal stress states. Annealed glass fractures into large, dangerous shards because cracks propagate freely. Tempered glass contains <strong>compressive surface stress</strong> that interrupts crack propagation, causing it to fragment into smaller pieces. Stress therefore becomes visible only at the moment of failure.</p>
+    <p class="image-credit">
+      Image credit: Granbury Door and Window, Tempered Glass vs. Annealed Glass.
+      <a href="https://granburydoorandwindow.net/tempered-glass-vs-annealed-glass/" target="_blank" rel="noopener">
+        Source
+      </a>
+    </p>
   </div>
 </article>
 
 <!-- Entry 15: Polarized Stress -->
 <article class="essay-entry layout-portrait">
   <div class="image-wrap">
-    <div class="photo-placeholder">
-      <div class="photo-placeholder-inner">
-        <span class="photo-placeholder-num">Image 15</span>
-        <span class="photo-placeholder-label">Polarized-light image showing stress patterns in glass</span>
-      </div>
-      <span class="upload-hint">Replace with your photo</span>
-    </div>
-    <!-- <img src="your-image-15.jpg" class="photo" alt="Polarized stress image"> -->
+    <img src="images/stress.jpeg" class="photo" alt="Polarized stress image">
   </div>
   <div class="caption-wrap">
     <span class="entry-num">15 — Polarized Stress</span>
     <p class="entry-caption">Under polarized light, <strong>internal stress becomes visible as bands of color</strong>. These stress patterns form because strained regions alter how light travels through the glass. What normally appears optically invisible suddenly emerges as a complex internal map of thermal history and mechanical forces.</p>
+    <p class="image-credit">
+      Image credit: Yiling Li, VIS249 Flameworking.
   </div>
 </article>
 
 <!-- Entry 16: Kiln Schedule -->
 <article class="essay-entry layout-split">
   <div class="image-wrap">
-    <div class="photo-placeholder">
-      <div class="photo-placeholder-inner">
-        <span class="photo-placeholder-num">Image 16</span>
-        <span class="photo-placeholder-label">Kiln schedule graph or firing program</span>
-      </div>
-      <span class="upload-hint">Replace with your photo</span>
-    </div>
-    <!-- <img src="your-image-16.jpg" class="photo" alt="Kiln schedule"> -->
+    <img src="images/Example-3-Step-Kiln-Firing-Schedule.webp" class="photo" alt="Kiln schedule">
   </div>
   <div class="caption-wrap">
     <span class="entry-num">16 — Kiln Schedule / Annealing</span>
     <p class="entry-caption">Annealing is fundamentally about <strong>controlling how quickly thermal energy leaves the material</strong>. If the exterior cools too rapidly compared to the interior, stress accumulates as different regions contract unevenly. The kiln schedule therefore functions as both a scientific protocol and a choreography of molecular relaxation.</p>
+    <p class="image-credit">
+      Image credit: Brittany Gabel, Kiln Firing Schedule Example.
+      <a href="https://www.kilncontrol.com/blog/kiln-firing-schedules/?srsltid=AfmBOorRNmuuZ0vYjHGSBcbBTm0FXyrqHsozsuZTmk141gfYsc5p7SvV" target="_blank" rel="noopener">
+        Source
+      </a>
+    </p>
   </div>
 </article>
 
@@ -828,71 +833,57 @@
   <div class="caption-wrap">
     <span class="entry-num">17 — Wax Model / Mold</span>
     <p class="entry-caption">Kilncasting transforms materials through multiple states: <strong>wax becomes void, molten glass becomes solid</strong>, and temporary molds disappear after firing. Each stage leaves traces in the final object. The process revealed how glassmaking is less about imposing form onto matter and more about negotiating with thermal flow, viscosity, gravity, and time.</p>
+    <p class="image-credit">
+      Image credit: Yiling Li, VIS249 Kilncasting.
+    </p>
   </div>
   <div class="image-wrap">
-    <div class="photo-placeholder">
-      <div class="photo-placeholder-inner">
-        <span class="photo-placeholder-num">Image 17</span>
-        <span class="photo-placeholder-label">Wax model or mold-making process</span>
-      </div>
-      <span class="upload-hint">Replace with your photo</span>
-    </div>
-    <!-- <img src="your-image-17.jpg" class="photo" alt="Wax model mold"> -->
+    <img src="images/kiln_molds.jpeg" class="photo" alt="Wax model mold">
   </div>
 </article>
 
 <!-- Entry 18: Molten Glass -->
 <article class="essay-entry layout-full">
   <div class="image-wrap" style="aspect-ratio: 16/9;">
-    <div class="photo-placeholder" style="min-height: 420px;">
-      <div class="photo-placeholder-inner">
-        <span class="photo-placeholder-num">Image 18</span>
-        <span class="photo-placeholder-label">Molten glass in kiln or furnace</span>
-      </div>
-      <span class="upload-hint">Replace with your photo</span>
-    </div>
-    <!-- <img src="your-image-18.jpg" class="photo" alt="Molten glass furnace"> -->
+    <img src="images/molten_glass.jpg" class="photo" alt="Molten glass furnace">
   </div>
   <div class="caption-wrap">
     <span class="entry-num">18 — Molten Glass / Furnace</span>
     <p class="entry-caption">At high temperatures, glass exists in <strong>a state between liquid and solid</strong>. Its viscosity changes continuously rather than abruptly, allowing it to slowly deform, flow, and settle into molds. Observing molten glass challenged my assumptions about materials existing in fixed states.</p>
+    <p class="image-credit">
+      Image credit: Microwave Chemical, Glass Production.
+      <a href="https://mwcc.jp/post_seed_en/glass-production/" target="_blank" rel="noopener">
+        Source
+      </a>
   </div>
 </article>
 
 <!-- Entry 19: Your Own Work -->
 <article class="essay-entry layout-portrait">
   <div class="image-wrap">
-    <div class="photo-placeholder">
-      <div class="photo-placeholder-inner">
-        <span class="photo-placeholder-num">Image 19</span>
-        <span class="photo-placeholder-label">Your own cast or polished glass piece</span>
-      </div>
-      <span class="upload-hint">Replace with your photo</span>
-    </div>
-    <!-- <img src="your-image-19.jpg" class="photo" alt="My own cast piece"> -->
+    <img src="images/Yiling.JPEG" class="photo" alt="My own cast piece">
   </div>
   <div class="caption-wrap">
     <span class="entry-num">19 — My Own Work</span>
     <p class="entry-caption">My own interaction with glass shifted from seeing it as a passive material to understanding it as an <strong>optical and thermal system</strong>. Surface finish, thickness, cooling history, and lighting conditions all became embedded into the final appearance of the work. Material process and scientific behavior could no longer be separated.</p>
+    <p class="image-credit">
+      Image credit: Yiling Li, VIS249 Project 2.
+    </p>
   </div>
 </article>
 
 <!-- CLOSING -->
 <section class="closing">
   <div class="closing-image-wrap">
-    <div class="photo-placeholder" style="height: 100%; min-height: 600px; border: none;">
-      <div class="photo-placeholder-inner">
-        <span class="photo-placeholder-num">Image 20</span>
-        <span class="photo-placeholder-label">Atmospheric — light passing through glass at Corning or studio</span>
-      </div>
-      <span class="upload-hint">Replace with closing image</span>
-    </div>
-    <!-- <img src="your-image-20.jpg" class="photo" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(0.7);" alt="Closing image"> -->
+    <img src="images/IMG_4712 - Copy.jpeg" class="photo" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(0.7);" alt="Closing image">
   </div>
   <div class="closing-overlay"></div>
   <div class="closing-content">
     <p class="closing-label">Conclusion</p>
     <p class="closing-text">By the end of the semester, I no longer experienced glass simply as transparent. I began to see it as a material that stores heat histories, redirects light, reveals stress, and transforms depending on angle, thickness, and illumination. The science of glass did not reduce its mystery; instead, understanding the physics made its visual behavior feel even more complex and alive.</p>
+    <p class="image-credit">
+      Image credit: Yiling Li, VIS249 Corning Museum of Glass Field Trip.
+    </p>
   </div>
 </section>
 
