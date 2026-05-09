@@ -146,14 +146,39 @@
     margin-bottom: 1.5rem;
   }
 
-  .hero-title {
+  .marquee {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+
+  .marquee_blur {
+    filter: blur(8px);
+    opacity: 0.7;
+  }
+
+  .marquee_clear {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .marquee_text {
     font-family: var(--serif);
     font-size: clamp(3rem, 7vw, 7rem);
     font-weight: 400;
     line-height: 1.05;
     letter-spacing: -0.02em;
-    margin-bottom: 1rem;
-    text-shadow: 0 0 16px rgba(232,228,220,0.35), 0 0 28px rgba(200,184,154,0.18);
+    text-shadow: 0 0 16px rgba(232,228,220,0.5), 0 0 28px rgba(200,184,154,0.3);
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      text-shadow: 0 0 16px rgba(232,228,220,0.5), 0 0 28px rgba(200,184,154,0.3);
+    }
+    50% {
+      text-shadow: 0 0 16px rgba(232,228,220,0.2), 0 0 28px rgba(200,184,154,0.1);
+    }
   }
 
   .hero-subtitle {
@@ -531,9 +556,16 @@
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <p class="hero-eyebrow">A Photo Essay</p>
-    <h1 class="hero-title">Glass as a Machine<br>for Light</h1>
+  <div class="marquee">
+    <div class="marquee_blur" aria-hidden="true">
+      <p class="marquee_text">Glass as a Machine<br>for Light</p>
+    </div>
+    <div class="marquee_clear">
+      <p class="marquee_text">Glass as a Machine<br>for Light</p>
+    </div>
+  </div>
     <p class="hero-subtitle">How glass bends, stores, filters, and performs light across science and art</p>
-    <p class="hero-caption">Glass is often described as transparent, but transparency is not the absence of behavior. Throughout this course, I began to understand glass as an active optical material that bends, reflects, absorbs, and scatters light in highly controlled ways.</p>
+    <p class="hero-caption">Glass is often described as transparent, but transparency is not the absence of behavior. Throughout this course, I learned to understand glass as an active optical material that bends, reflects, absorbs, and scatters light in highly controlled ways.</p>
     <p class="image-credit">
       Image credit: Vera Lišková, Anthem of Joy in Glass.
       <a href="https://glasscollection.cmog.org/objects/19447/anthem-of-joy-in-glass" target="_blank" rel="noopener">
